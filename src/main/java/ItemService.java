@@ -1,4 +1,6 @@
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ItemService {
@@ -14,9 +16,15 @@ public class ItemService {
     public void parseRecords(String[] records) {
         for (String record : records) {
             String[] fields = record.split("[;@^*%!]");
-//            Main.printArray(fields);
-            fields = Arrays.stream(fields).map(x -> x.substring(x.indexOf(':')+1)).collect(Collectors.toList()).toArray(new String[0]);
+            Main.printArray(fields);
 
+            for (int i = 0; i < fields.length; i++) {
+                Pattern pattern = Pattern.compile("(?<=:)(.*)");
+                Matcher matcher = pattern.matcher(fields[i]);
+                matcher.find();
+                fields[i] = matcher.group(0);
+
+            }
             this.items.add(new Item(DeL33t.translate(fields[0]),(!fields[1].equals(""))?Double.parseDouble(fields[1]):null,fields[2]));
         }
     }
