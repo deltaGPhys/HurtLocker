@@ -1,5 +1,7 @@
 import org.apache.commons.io.IOUtils;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
 
@@ -11,7 +13,22 @@ public class Main {
 
     public static void main(String[] args) throws Exception{
         String output = (new Main()).readRawDataToString();
-        System.out.println(output);
+
+        String[] records = output.split("##");
+
+        ItemService itemService = new ItemService();
+        itemService.parseRecords(records);
+//        itemService.printItems();
+//        System.out.println("\n\n");
+        itemService.countInventory();
+//        System.out.println("\n\n");
+        System.out.println(itemService.inventoryReport());
 
     }
+
+    public static void printArray(String[] array) {
+        System.out.println(String.join("\n", array));
+        System.out.println("\n");
+    }
+
 }
