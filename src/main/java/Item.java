@@ -67,7 +67,13 @@ public class Item implements Comparable<Item>{
 
     @Override
     public int compareTo(Item item2) {
-        return this.toString().compareTo(item2.toString());
+        System.out.println(this.name + " " + item2.getName());
+        if (!this.name.equals("Error")) {
+            return this.toString().compareTo(item2.toString());
+        } else {
+            System.out.println("Error comp");
+            return (item2.getName().equals("Error")) ? 0 : -1;
+        }
     }
 
 }

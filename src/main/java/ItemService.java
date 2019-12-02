@@ -50,33 +50,28 @@ public class ItemService {
     }
 
     public String inventoryReport() {
-        TreeSet<String> items = new TreeSet(this.inventory.keySet().stream().map(x-> x.getName()).collect(Collectors.toSet()));
+        TreeSet<String> items = new TreeSet(this.inventory.keySet().stream().filter(x -> !x.getName().equals("Error")).map(x-> x.getName()).collect(Collectors.toSet()));
         String invReport = "";
         for (String name : items) {
-            if (!name.equals("Error")) {
-                Item[] pricePoints = this.inventory.keySet().stream().filter(x-> x.getName().equals(name)).collect(Collectors.toList()).toArray(new Item[0]);
-                int totalNum = Arrays.stream(pricePoints).mapToInt(x -> this.inventory.get(x)).sum();
-                String header = "";
-                    header = String.format("name: %1$8s       seen: %2$2d time"+((totalNum > 1)?"s":"")+"\n", name, totalNum);//%1$2d :%2$10d:
-                invReport += header;
+            Item[] pricePoints = this.inventory.keySet().stream().filter(x-> x.getName().equals(name)).collect(Collectors.toList()).toArray(new Item[0]);
+            int totalNum = Arrays.stream(pricePoints).mapToInt(x -> this.inventory.get(x)).sum();
+            String header = "";
+                header = String.format("name: %1$8s       seen: %2$2d time"+((totalNum > 1)?"s":"")+"\n", name, totalNum);
+            invReport += header;
 
-                invReport += "==============       ==============\n";
-                String priceLine = "";
-                for (Item item : pricePoints) {
-                    int number = this.inventory.get(item);
-                    priceLine += String.format("price: %1$7s       seen: %2$2d time" + ((number > 1) ? "s" : "") + "\n", String.valueOf(item.getPrice()), number);
-                    priceLine += "--------------       --------------\n";
-                }
-                invReport += priceLine + "\n";
+            invReport += "==============       ==============\n";
+            String priceLine = "";
+            for (Item item : pricePoints) {
+                int number = this.inventory.get(item);
+                priceLine += String.format("price: %1$7s       seen: %2$2d time" + ((number > 1) ? "s" : "") + "\n", String.valueOf(item.getPrice()), number);
+                priceLine += "--------------       --------------\n";
             }
-
+            invReport += priceLine + "\n";
         }
 
-        Item[] pricePoints = this.inventory.keySet().stream().filter(x-> x.getName().equals("Error")).collect(Collectors.toList()).toArray(new Item[0]);
-        int totalNum = Arrays.stream(pricePoints).mapToInt(x -> this.inventory.get(x)).sum();
-        String header = "";
-        header = String.format("Errors               seen: %1$2d time"+((totalNum > 1)?"s":"")+"\n",  totalNum);//%1$2d :%2$10d:
-        invReport += header;
+        // Null object pattern FTW :)
+        int totalNum = this.inventory.get(new Item(null,null,null));
+        invReport += String.format("Errors               seen: %1$2d time"+((totalNum > 1)?"s":"")+"\n",  totalNum);
         return invReport;
     }
 }
