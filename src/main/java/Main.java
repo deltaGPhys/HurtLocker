@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) throws Exception{
         String output = (new Main()).readRawDataToString();
 
-        String[] records = output.split("##");
+        String[] records = StringService.split("##",output);
 
         ItemService itemService = new ItemService();
         itemService.parseRecords(records);

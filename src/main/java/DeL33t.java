@@ -1,10 +1,13 @@
 public class DeL33t {
     enum L33tSub {
         _48('o'), //0
-        _51('e'), //3
-        _33('i'), //!
         _49('l'), //1
+        _51('e'), //3
+        _52('a'), //4
+        _54('b'), //6
         _55('t'), //7
+        _33('i'), //!
+        //... etc.: can be expanded to more, and works with multiple possibilities per letter
         ;
 
         private char realChar;
@@ -32,8 +35,7 @@ public class DeL33t {
                     translated.setCharAt(i, sub);
                 }
             }
-            String transLC = translated.toString().toLowerCase();
-            return String.valueOf(transLC.charAt(0)).toUpperCase() + transLC.substring(1);
+            return StringService.toTitleCase(translated.toString());
         } else {
             return "";
         }

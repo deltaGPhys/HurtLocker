@@ -6,12 +6,18 @@ public class Item implements Comparable<Item>{
     private Double price;
     private String type;
 
+    public Item() { // 'null object'
+        this.name = "Error";
+        this.price = null;
+        this.type = "";
+    }
+
     public Item(String name, Double price, String type) {
         if (name != null && name != "" && price != null && type != null) {
             this.name = name;
             this.price = price;
             this.type = type;
-        } else {
+        } else { // the 'null object'
             this.name = "Error";
             this.price = null;
             this.type = "";
@@ -22,26 +28,9 @@ public class Item implements Comparable<Item>{
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Double getPrice() {
         return price;
     }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
 
     @Override
     public String toString() {
@@ -67,12 +56,10 @@ public class Item implements Comparable<Item>{
 
     @Override
     public int compareTo(Item item2) {
-        System.out.println(this.name + " " + item2.getName());
-        if (!this.name.equals("Error")) {
+        if (!this.equals(new Item())) { // is not a null object?
             return this.toString().compareTo(item2.toString());
         } else {
-            System.out.println("Error comp");
-            return (item2.getName().equals("Error")) ? 0 : -1;
+            return (item2.equals(new Item())) ? 0 : -1; // Null's always later. Tied for two nulls
         }
     }
 

@@ -15,8 +15,8 @@ public class ItemService {
 
     public void parseRecords(String[] records) {
         for (String record : records) {
-            String[] fields = record.split("[;@^*%!]");
-            Main.printArray(fields);
+            String[] fields = StringService.split("[;@^*%!]",record);
+            //Main.printArray(fields);
 
             for (int i = 0; i < fields.length; i++) {
                 Pattern pattern = Pattern.compile("(?<=:)(.*)");
