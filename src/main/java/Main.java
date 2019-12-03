@@ -27,7 +27,7 @@ public class Main {
     }
 
     public static void printArray(String[] array) {
-        System.out.println(String.join("\n", array));
+        System.out.println(String.join("\n", array)); //'tis just for debugging
         System.out.println("\n");
     }
 
